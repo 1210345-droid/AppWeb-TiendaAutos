@@ -1,0 +1,15 @@
+{
+  "name": "tienda-autos-node",
+  "version": "1.0.0",
+  "description": "Sistema académico simple en Node.js",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "msnodesqlv8": "^5.1.9",
+    "mssql": "^10.0.2"
+  }
+}

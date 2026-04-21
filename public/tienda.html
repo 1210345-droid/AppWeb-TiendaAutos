@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda Mínima Autopartes</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
+
+        :root {
+            --bg-grad: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #cbd5e1;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --danger: #ef4444;
+            --danger-hover: #dc2626;
+            --success: #10b981;
+            --success-hover: #059669;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: var(--bg-grad) !important;
+            min-height: 100vh;
+            color: var(--text-main);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        /* LOGIN & REGISTRO */
+        .login-box {
+            background: var(--glass-bg);
+            padding: 40px;
+            margin-top: 10vh;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(12px);
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-box h2 {
+            margin-top: 0;
+            margin-bottom: 25px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .login-box input {
+            width: 85%;
+            padding: 12px 15px;
+            margin: 10px 0;
+            background: rgba(0, 0, 0, 0.2) !important;
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            color: white !important;
+            font-family: 'Outfit';
+            transition: all 0.3s;
+        }
+
+        .login-box input::placeholder {
+            color: #94a3b8;
+        }
+
+        .login-box input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(0, 0, 0, 0.4);
+            box-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
+        }
+
+        .login-box button {
+            width: 95%;
+            padding: 14px;
+            margin-top: 15px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.1s;
+            font-family: 'Outfit';
+            font-size: 16px;
+        }
+
+        .login-box button:hover {
+            background: var(--accent-hover);
+            box-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
+        }
+
+        .login-box button:active {
+            transform: scale(0.98);
+        }
+
+        .error {
+            color: #fca5a5;
+            margin-top: 15px;
+            font-weight: 500;
+            font-size: 14px;
+            background: rgba(239, 68, 68, 0.1);
+            padding: 8px;
+            border-radius: 6px;
+        }
+
+        /* NAVBAR AND DASHBOARD */
+        .navbar {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--glass-border);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin: 0 15px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .navbar a:hover {
+            color: var(--text-main);
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+        }
+
+        .dashboard {
+            padding: 30px;
+            background: var(--glass-bg);
+            margin-top: 30px;
+            border-radius: 16px;
+            min-height: 500px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .dashboard h2 {
+            margin-top: 0;
+            font-weight: 600;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        /* TABLES & FORMS */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.1);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-size: 13px;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        tr {
+            transition: background 0.2s;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        td {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        button {
+            font-family: 'Outfit';
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            cursor: pointer;
+            border-radius: 6px;
+            font-size: 13px;
+        }
+
+        .btn-danger:hover {
+            background: var(--danger-hover);
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
+            transform: scale(1.05);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 9px 18px;
+            cursor: pointer;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .btn-success:hover {
+            background: var(--success-hover);
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+            transform: scale(1.02);
+        }
+
+        /* SEARCH & FILTER BAR */
+        .search-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .search-container input {
+            flex: 1;
+            padding: 12px 18px;
+            border-radius: 30px;
+            border: 1px solid var(--glass-border);
+            background: rgba(0, 0, 0, 0.2);
+            color: white;
+            font-family: 'Outfit';
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+
+        .search-container input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .pills-container {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .pill {
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            transition: all 0.2s;
+        }
+
+        .pill:hover,
+        .pill.active {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        /* PROFILE CARD */
+        .profile-card {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid var(--glass-border);
+            max-width: 400px;
+            margin: 40px auto;
+        }
+
+        .profile-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+        .profile-card h3 {
+            margin: 0 0 10px 0;
+            font-size: 24px;
+            color: var(--accent);
+        }
+
+        .profile-card p {
+            margin: 5px 0;
+            color: #cbd5e1;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            background: rgba(0, 0, 0, 0.15);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 12px 15px;
+            border: 1px solid var(--glass-border);
+            border-radius: 6px;
+            flex: 1;
+            min-width: 150px;
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            font-family: 'Outfit';
+            transition: border-color 0.3s;
+        }
+
+        .form-group input::placeholder {
+            color: #94a3b8;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .form-group select option {
+            background: #1e293b;
+            color: white;
+        }
+
+        /* PRODUCT GRID (AMAZON STYLE) */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .product-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 160px;
+            object-fit: contain;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .product-card h3 {
+            font-size: 16px;
+            margin: 0 0 10px 0;
+            color: var(--text-main);
+            height: 40px;
+            overflow: hidden;
+        }
+
+        .product-card .marca {
+            font-size: 12px;
+            color: var(--accent);
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .product-card .precio {
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--success);
+            margin: 10px 0;
+        }
+
+        .product-card .add-row {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-card input[type="number"] {
+            width: 50px;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid var(--glass-border);
+            background: rgba(0, 0, 0, 0.2);
+            color: white;
+            text-align: center;
+        }
+
+        /* MOBILE RESPONSIVE CSS */
+        @media(max-width: 768px) {
+            .navbar { flex-direction: column; gap: 10px; align-items: stretch; }
+            .navbar div { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+            .product-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+            .form-group { display: flex; flex-direction: column; margin-bottom: 20px; }
+            .form-group input, .form-group select, .form-group button { width: 100%; margin-bottom: 8px; box-sizing: border-box; }
+            .container { padding: 10px; }
+            .dashboard > div > table { display: block; overflow-x: auto; white-space: nowrap; }
+            .pills-container { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; }
+            .modal-content { max-width: 95%; padding: 15px; }
+            h2 { font-size: 20px; }
+        }
+
+        /* MODALS */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background: var(--bg-main);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+            transform: translateY(20px);
+            transition: transform 0.3s;
+            position: relative;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+
+        .close-modal:hover {
+            color: white;
+        }
+
+        .ticket-box {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--success);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            color: #10b981;
+        }
+
+        /* HISTORY */
+        .history-list {
+            text-align: left;
+            margin-top: 30px;
+        }
+
+        .history-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .history-item h4 {
+            margin: 0 0 10px 0;
+            color: var(--accent);
+        }
+
+        .history-item ul {
+            margin: 0;
+            padding-left: 20px;
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 1. PANTALLA LOGIN & REGISTRO -->
+    <div id="loginSection" class="login-box">
+        <h2 id="authTitle">Iniciar Sesión</h2>
+        <div id="regFields" class="hidden">
+            <input type="text" id="regNombre" placeholder="Nombre real">
+            <input type="text" id="regApellido" placeholder="Apellido">
+            <input type="text" id="regTelefono" placeholder="Teléfono / Email">
+        </div>
+        <input type="text" id="username" placeholder="Nombre de Usuario (Login)">
+        <input type="password" id="password" placeholder="Contraseña secreta">
+        <button id="authBtn" onclick="procesarAuth()">Ingresar</button>
+        <div style="text-align: center; margin-top: 15px;">
+            <a href="#" id="toggleAuth" onclick="toggleRegister()"
+                style="color: #60a5fa; text-decoration: none; font-size: 14px;">¿No tienes cuenta? Crear una</a>
+        </div>
+        <div id="loginError" class="error hidden">Usuario o contraseña incorrectos.</div>
+    </div>
+
+    <!-- 2. NAVBAR Y DASHBOARD -->
+    <div id="mainSection" class="hidden">
+        <div class="navbar">
+            <div>
+                <strong style="margin-right:20px; font-size: 18px;">Tienda Autopartes</strong>
+                <a id="navClientes" onclick="mostrarSeccion('clientes')">Clientes</a>
+                <a id="navLogistica" class="hidden" onclick="mostrarSeccion('logistica')">📦 Logística</a>
+                <a onclick="mostrarSeccion('productos')">Productos</a>
+                <a id="navCarrito" class="hidden" onclick="mostrarSeccion('carrito')">🛒 Carrito (<span
+                        id="cartCount">0</span>)</a>
+                <a id="navPubs" class="hidden" onclick="mostrarSeccion('publicaciones')" style="color:var(--accent);">🏷️ Vender</a>
+                <a id="navPerfil" class="hidden" onclick="mostrarSeccion('perfil')">👤 Mi Perfil</a>
+            </div>
+            <div style="flex-grow:1; max-width: 400px; display:flex; margin:0 20px;">
+                <input type="text" id="globalSearchBox" placeholder="Buscar productos, marcas y más..." onkeyup="filtrarProductosGlobal()" 
+                       style="width:100%; border-radius: 20px; padding: 8px 15px; border:none; outline:none; color:#1e293b;">
+            </div>
+            <div>
+                <a onclick="logout()">Cerrar sesión</a>
+            </div>
+        </div>
+
+        <div class="container dashboard">
+            <!-- SECCION CLIENTES -->
+            <div id="seccionClientes">
+                <h2>Gestión de Clientes</h2>
+                <div class="form-group">
+                    <input type="text" id="cliNombre" placeholder="Nombre">
+                    <input type="text" id="cliApellido" placeholder="Apellido">
+                    <input type="text" id="cliTelefono" placeholder="Teléfono">
+                    <button class="btn-success" onclick="agregarCliente()">+ Agregar Cliente</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Teléfono</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaClientes"></tbody>
+                </table>
+            </div>
+
+            <!-- SECCION LOGISTICA (ADMIN) -->
+            <div id="seccionLogistica" class="hidden">
+                <h2>Control de Logística y Envíos Totales</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID Orden</th>
+                            <th>Cliente</th>
+                            <th>Fecha</th>
+                            <th>Total</th>
+                            <th>Fase de Envío (Tracking)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaLogistica"></tbody>
+                </table>
+            </div>
+
+            <!-- SECCION PRODUCTOS -->
+            <div id="seccionProductos" class="hidden">
+                <h2 id="tituloProductos">Productos</h2>
+                <div class="form-group" id="formAddProducto">
+                    <input type="hidden" id="prodIdEdit" value="">
+                    <input type="text" id="prodDesc" placeholder="Descripción">
+                    <select id="prodCat">
+                        <option value="General">General</option>
+                        <option value="Refacciones">Refacciones</option>
+                        <option value="Repuestos">Repuestos</option>
+                        <option value="Accesorios">Accesorios</option>
+                        <option value="Químicos">Químicos</option>
+                    </select>
+                    <input type="number" id="prodPrecio" placeholder="Precio de venta" step="0.01">
+                    <input type="number" id="prodCosto" placeholder="Costo" step="0.01">
+                    <input type="text" id="prodMarca" placeholder="Marca (Libre o Seleccionar)" list="listMarcas">
+                    <datalist id="listMarcas"></datalist>
+                    <input type="text" id="prodProv" placeholder="Proveedor" list="listProvs">
+                    <datalist id="listProvs"></datalist>
+                    <input type="text" id="prodImg" placeholder="URL Imagen (Opcional)">
+                    <button class="btn-success" id="btnGuardarProd" onclick="guardarProducto()">+ Agregar
+                        Producto</button>
+                    <button class="btn-danger hidden" id="btnCancelarEdit" onclick="cancelarEdicion()">Cancelar</button>
+                </div> <!-- /formAddProducto -->
+
+                <div id="busquedaCliente" class="hidden">
+                    <div class="search-container">
+                        <input type="text" id="buscadorDocs" placeholder="Buscar por marca, modelo o repuesto..."
+                            onkeyup="filtrarProductos()">
+                    </div>
+                    <div class="pills-container" id="pillsContainer">
+                        <div class="pill active" onclick="setFiltroCat('Todas')">Todas</div>
+                        <div class="pill" onclick="setFiltroCat('Refacciones')">Refacciones</div>
+                        <div class="pill" onclick="setFiltroCat('Repuestos')">Repuestos</div>
+                        <div class="pill" onclick="setFiltroCat('Accesorios')">Accesorios</div>
+                        <div class="pill" onclick="setFiltroCat('Químicos')">Químicos</div>
+                    </div>
+                </div>
+
+                <div id="gridProductos" class="product-grid hidden"></div>
+
+                <table id="tablaModoAdmin">
+                    <thead id="headProductos">
+                        <tr>
+                            <th>ID</th>
+                            <th>Descripción</th>
+                            <th>Precio Venta</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaProductos"></tbody>
+                </table>
+            </div> <!-- CIERRE CORRECTO DE SECCION PRODUCTOS -->
+
+            <!-- SECCION PERFIL -->
+                <div id="seccionPerfil" class="hidden">
+                    <h2>Identidad y Perfil</h2>
+                    <div class="profile-card" id="profileCardBox">
+                        <p>Cargando datos del conductor...</p>
+                    </div>
+
+                    <h2 style="margin-top: 40px; border-bottom: 1px solid var(--glass-border); padding-bottom:10px;">
+                        Historial de Pedidos</h2>
+                    <div id="misOrdenesBox" class="history-list">
+                        <p style="color:#94a3b8;">Cargando historial...</p>
+                    </div>
+                </div>
+
+                <!-- SECCION PUBLICACIONES C2C -->
+                <div id="seccionPublicaciones" class="hidden">
+                    <h2>Publicar Mi Producto (Segunda Mano)</h2>
+                    <div class="form-group" style="border:1px solid var(--accent);">
+                        <input type="text" id="c2cDesc" placeholder="Título de lo que vendes (Ej. Llantas Rin 15)">
+                        <select id="c2cEstado">
+                            <option value="Nuevo">Estética: Nuevo</option>
+                            <option value="Semi-Nuevo">Estética: Semi-Nuevo</option>
+                            <option value="Usado (Buen Estado)">Usado (Buen Estado)</option>
+                            <option value="Usado (Con detalles)">Usado (Con detalles)</option>
+                        </select>
+                        <input type="text" id="c2cDetalles" placeholder="Describe los detalles de uso o raspones...">
+                        <input type="number" id="c2cPrecio" placeholder="Tu precio de venta deseado" step="0.01">
+                        <input type="text" id="c2cImg" placeholder="URL Imagen representativa (Opcional)">
+                        <button class="btn-success" style="background:var(--accent); color:#1e293b;" onclick="subirPublicacion()">🚀 Publicar en Tienda</button>
+                    </div>
+                    <p style="color:#94a3b8; font-size:12px; margin-top:-10px;">* Al publicar, tu repuesto aparecerá en el catálogo general marcado como artículo de Segunda Mano bajo tu nombre de Perfil.</p>
+                </div>
+            <!-- SECCION CARRITO -->
+            <div id="seccionCarrito" class="hidden">
+                <h2>Tu Carrito de Compras</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Descripción</th>
+                            <th>Precio Unitario</th>
+                            <th>Cantidad</th>
+                            <th>Subtotal</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaCarritoList"></tbody>
+                </table>
+                <div style="text-align: right; margin-top: 20px;">
+                    <h3 style="margin-bottom: 20px;">Total: $<span id="cartTotal">0.00</span></h3>
+                    <button class="btn-success" onclick="iniciarPagoCarrito()">Realizar Pago Segúro</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PAGO (CHECKOUT) -->
+    <div id="modalPago" class="modal-overlay" onclick="if(event.target===this) toggleModal('modalPago', false)">
+        <div class="modal-content" style="max-width: 450px;">
+            <span class="close-modal" onclick="toggleModal('modalPago', false)">&times;</span>
+            <div style="font-size: 40px; margin-bottom: 10px;">💳</div>
+            <h2>Pagar Orden</h2>
+            <p style="margin-bottom: 20px; font-size:14px; color:#94a3b8;">Total a cobrar: <strong style="color:var(--success); font-size:18px;">$<span id="modalPagoTotal">0.00</span></strong></p>
+            
+            <div class="form-group" style="text-align:left;">
+                <label style="font-size: 13px; color:var(--accent);">Número de Tarjeta (Se autocompletará si ya compraste)</label>
+                <input type="text" id="payTarjeta" placeholder="0000 0000 0000 0000" maxlength="19" style="margin-bottom: 15px;">
+                
+                <div style="display:flex; gap:10px;">
+                    <div style="flex:1;">
+                        <label style="font-size: 13px; color:var(--accent);">Expiración (MM/AA)</label>
+                        <input type="text" id="payExp" placeholder="12/25" maxlength="5">
+                    </div>
+                    <div style="flex:1;">
+                        <label style="font-size: 13px; color:var(--accent);">CVV</label>
+                        <input type="password" id="payCvv" placeholder="***" maxlength="4">
+                    </div>
+                </div>
+                
+                <label style="margin-top:15px; font-size: 13px; color:var(--accent); display:block;">Nombre en la tarjeta</label>
+                <input type="text" id="payName" placeholder="Juan Perez" style="margin-bottom: 20px;">
+                
+                <button class="btn-success" style="width:100%; font-size: 16px;" onclick="confirmarPago()">Confirmar y Pagar</button>
+                <p style="text-align:center; margin-top:10px; font-size:11px; color:#64748b;">🔒 Tus finanzas están encriptadas. No guardamos caducidad ni CVV.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PRODUCTO (MERCADOLIBRE) -->
+    <div id="modalProducto" class="modal-overlay" onclick="if(event.target===this) toggleModal('modalProducto', false)">
+        <div class="modal-content">
+            <span class="close-modal" onclick="toggleModal('modalProducto', false)">&times;</span>
+            <img id="mProdImg" src=""
+                style="width: 100%; max-height: 250px; object-fit: contain; border-radius: 8px; margin-bottom: 15px; background: rgba(0,0,0,0.2);">
+            <div id="mProdCondicion" style="font-size: 11px; font-weight: bold; background: #ea580c; color: white; display: inline-block; padding: 2px 8px; border-radius: 10px; margin-bottom: 5px;" class="hidden">Usado</div>
+            <div id="mProdMarca" class="marca"
+                style="font-size: 14px; color: var(--accent); text-transform: uppercase;"></div>
+            <h2 id="mProdDesc" style="margin: 10px 0;"></h2>
+            <div id="mProdDetalles" style="font-size: 14px; color: #cbd5e1; margin-bottom: 10px; font-style: italic;"></div>
+            <div id="mProdVendedor" class="hidden" style="font-size: 13px; color: #94a3b8; margin-bottom: 15px;">Vendido por: <strong style="color:white;"></strong></div>
+            <div id="mProdPrecio" style="font-size: 28px; font-weight: bold; color: var(--success); margin: 0 0 15px 0;">
+            </div>
+
+            <div style="display:flex; justify-content:center; gap: 10px; margin-top:20px;">
+                <input type="number" id="mProdQty" value="1" min="1"
+                    style="width: 70px; padding: 10px; border-radius: 8px; background: rgba(0,0,0,0.3); color:white; border: 1px solid var(--glass-border); text-align:center;">
+                <button class="btn-success" id="mProdBtn" style="font-size: 16px; padding: 10px 30px;">Comprar
+                    Ahora</button>
+            </div>
+            <p style="margin-top: 15px; font-size: 12px; color: #64748b;">✔ Envío asegurado - Tienda Autopartes Original
+            </p>
+        </div>
+    </div>
+
+    <!-- MODAL TICKET FACTURA -->
+    <div id="modalTicket" class="modal-overlay"
+        onclick="if(event.target===this) { toggleModal('modalTicket', false); mostrarSeccion('productos'); }">
+        <div class="modal-content" style="max-width: 400px;">
+            <div style="font-size: 60px;">✅</div>
+            <h2>¡Pago Exitoso!</h2>
+            <div class="ticket-box">
+                <p style="margin:5px 0;"><strong>Ticket / Orden Nro:</strong> #<span id="tcktId">000</span></p>
+                <p style="margin:5px 0;"><strong>Monto:</strong> $<span id="tcktTotal">0.00</span></p>
+                <p style="margin:5px 0; font-size:12px;">Transacción Aprobada de Contado</p>
+            </div>
+            <button class="btn-success" onclick="toggleModal('modalTicket', false); mostrarSeccion('productos');">Volver
+                al Catálogo</button>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+        const API_URL = window.location.origin + "/api";
+
+        // Al cargar página revisamos localStorage para UX
+        document.addEventListener("DOMContentLoaded", () => {
+            if (localStorage.getItem("sesionUnica") === "true") {
+                mostrarLogeado();
+            }
+        });
+
+        let isRegistering = false;
+
+        function toggleRegister() {
+            isRegistering = !isRegistering;
+            document.getElementById("authTitle").innerText = isRegistering ? "Registrar Nuevo Usuario" : "Iniciar Sesión";
+            document.getElementById("authBtn").innerText = isRegistering ? "Crear Cuenta" : "Ingresar";
+            document.getElementById("toggleAuth").innerText = isRegistering ? "¿Ya tienes cuenta? Inicia sesión" : "¿No tienes cuenta? Crear una";
+            document.getElementById("loginError").classList.add("hidden");
+
+            if (isRegistering) document.getElementById("regFields").classList.remove("hidden");
+            else document.getElementById("regFields").classList.add("hidden");
+        }
+
+        async function procesarAuth() {
+            if (isRegistering) {
+                await register();
+            } else {
+                await login();
+            }
+        }
+
+        async function register() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            const nombre = document.getElementById("regNombre").value;
+            const apellido = document.getElementById("regApellido").value;
+            const telefono = document.getElementById("regTelefono").value;
+            const errorDiv = document.getElementById("loginError");
+
+            localStorage.setItem("userName", username); // Pre-save 
+
+            if (!username || !password || !nombre || !apellido) {
+                errorDiv.innerText = "Usuario, Contraseña, Nombre y Apellido son obligatorios.";
+                errorDiv.classList.remove("hidden");
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API_URL}/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password, nombre, apellido, telefono: telefono || null })
+                });
+
+                const data = !!res.headers.get("content-type")?.includes("json") ? await res.json() : null;
+
+                if (res.ok) {
+                    alert("Usuario creado con éxito. Ahora puedes Iniciar Sesión.");
+                    document.getElementById("password").value = "";
+                    toggleRegister(); // Regresa a pantalla de Login
+                } else {
+                    errorDiv.innerText = (data && data.message) ? data.message : "Error al crear usuario.";
+                    errorDiv.classList.remove("hidden");
+                }
+            } catch (err) {
+                errorDiv.innerText = "Error conectando al backend.";
+                errorDiv.classList.remove("hidden");
+            }
+        }
+
+        async function login() {
+            const username = document.getElementById("username").value;
+            localStorage.setItem("userName", username);
+            const password = document.getElementById("password").value;
+            const errorDiv = document.getElementById("loginError");
+
+            if (!username || !password) {
+                errorDiv.innerText = "Campos vacíos";
+                errorDiv.classList.remove("hidden");
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API_URL}/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await res.json();
+
+                if (res.ok && data.success) {
+                    localStorage.setItem("sesionUnica", "true");
+                    localStorage.setItem("userRol", data.rol);
+                    errorDiv.classList.add("hidden");
+                    mostrarLogeado();
+                } else {
+                    errorDiv.innerText = "Usuario o contraseña incorrectos.";
+                    errorDiv.classList.remove("hidden");
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Error conectando al backend (¿Está el servidor escuchando en localhost:5000?)");
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem("sesionUnica");
+            localStorage.removeItem("userRol");
+            document.getElementById("mainSection").classList.add("hidden");
+            document.getElementById("loginSection").classList.remove("hidden");
+            document.getElementById("username").value = "";
+            document.getElementById("password").value = "";
+        }
+
+        function mostrarLogeado() {
+            document.getElementById("loginSection").classList.add("hidden");
+            document.getElementById("mainSection").classList.remove("hidden");
+
+            if (localStorage.getItem("userRol") === "admin") {
+                document.getElementById("navClientes").classList.remove("hidden");
+                document.getElementById("navLogistica").classList.remove("hidden");
+                document.getElementById("navCarrito").classList.add("hidden");
+                document.getElementById("navPerfil").classList.add("hidden");
+                document.getElementById("navPubs").classList.add("hidden");
+                mostrarSeccion('clientes');
+            } else {
+                document.getElementById("navClientes").classList.add("hidden");
+                document.getElementById("navLogistica").classList.add("hidden");
+                document.getElementById("navCarrito").classList.remove("hidden");
+                document.getElementById("navPerfil").classList.remove("hidden");
+                document.getElementById("navPubs").classList.remove("hidden");
+                cargarPerfilSilencioso(); // Get Client ID preemptively
+                mostrarSeccion('productos');
+            }
+        }
+
+        async function cargarPerfilSilencioso() {
+            const user = localStorage.getItem("userName");
+            try {
+                const res = await fetch(`${API_URL}/perfil/${user}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    localStorage.setItem("idCliente", data.id);
+                }
+            } catch (e) { }
+        }
+
+        function mostrarSeccion(seccion) {
+            document.getElementById("seccionClientes").classList.add("hidden");
+            document.getElementById("seccionProductos").classList.add("hidden");
+            document.getElementById("seccionCarrito").classList.add("hidden");
+            document.getElementById("seccionPerfil").classList.add("hidden");
+            document.getElementById("seccionPublicaciones").classList.add("hidden");
+            document.getElementById("seccionLogistica").classList.add("hidden");
+
+            if (seccion === 'clientes') {
+                document.getElementById("seccionClientes").classList.remove("hidden");
+                cargarClientes();
+            } else if (seccion === 'productos') {
+                document.getElementById("seccionProductos").classList.remove("hidden");
+
+                if (localStorage.getItem("userRol") === "admin") {
+                    document.getElementById("tituloProductos").innerText = "Gestión de Productos";
+                    document.getElementById("formAddProducto").classList.remove("hidden");
+                    document.getElementById("busquedaCliente").classList.add("hidden");
+                    cargarSelects();
+                } else {
+                    document.getElementById("tituloProductos").innerText = "Productos";
+                    document.getElementById("formAddProducto").classList.add("hidden");
+                    document.getElementById("busquedaCliente").classList.remove("hidden");
+                }
+                cargarProductos();
+            } else if (seccion === 'carrito') {
+                document.getElementById("seccionCarrito").classList.remove("hidden");
+                renderCarrito();
+            } else if (seccion === 'perfil') {
+                document.getElementById("seccionPerfil").classList.remove("hidden");
+                cargarPerfil();
+            } else if (seccion === 'publicaciones') {
+                document.getElementById("seccionPublicaciones").classList.remove("hidden");
+            } else if (seccion === 'logistica') {
+                document.getElementById("seccionLogistica").classList.remove("hidden");
+                cargarLogistica();
+            }
+        }
+
+        /* ----- FUNCIONES PARA CLIENTES ------ */
+        async function cargarClientes() {
+            try {
+                const res = await fetch(`${API_URL}/clientes`);
+                const data = await res.json();
+                let html = "";
+                data.forEach(c => {
+                    html += `<tr>
+                        <td>${c.id}</td>
+                        <td>${c.nombre}</td>
+                        <td>${c.apellido}</td>
+                        <td>${c.telefono || '-'}</td>
+                        <td><button class="btn-danger" onclick="eliminarCliente(${c.id})">Borrar</button></td>
+                    </tr>`;
+                });
+                document.getElementById("tablaClientes").innerHTML = html;
+            } catch (err) { console.error(err); }
+        }
+
+        async function agregarCliente() {
+            const nombre = document.getElementById("cliNombre").value;
+            const apellido = document.getElementById("cliApellido").value;
+            const telefono = document.getElementById("cliTelefono").value;
+
+            if (!nombre || !apellido) {
+                alert("Nombre y apellido son requeridos");
+                return;
+            }
+
+            try {
+                await fetch(`${API_URL}/clientes`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nombre, apellido, telefono: telefono || null })
+                });
+
+                document.getElementById("cliNombre").value = "";
+                document.getElementById("cliApellido").value = "";
+                document.getElementById("cliTelefono").value = "";
+                alert("Cliente agregado con éxito");
+                cargarClientes();
+            } catch (error) {
+                alert("Error al guardar cliente");
+            }
+        }
+
+        async function eliminarCliente(id) {
+            if (!confirm("¿Estás seguro de borrar este cliente?")) return;
+            try {
+                await fetch(`${API_URL}/clientes/${id}`, { method: 'DELETE' });
+                cargarClientes();
+            } catch (error) {
+                alert("Error al borrar el cliente");
+            }
+        }
+
+        // ----- FUNCIONES DE LOGISTICA -----
+        async function cargarLogistica() {
+            try {
+                const res = await fetch(`${API_URL}/admin/ordenes?t=${new Date().getTime()}`);
+                const data = await res.json();
+                let html = "";
+                data.forEach(o => {
+                    let d = new Date(o.fecha_orden).toLocaleString();
+                    html += `<tr>
+                        <td>#${o.id_orden}</td>
+                        <td>${o.nombre || '-'} ${o.apellido || ''}</td>
+                        <td>${d}</td>
+                        <td style="color:var(--success); font-weight:bold;">$${parseFloat(o.total_orden).toFixed(2)}</td>
+                        <td>
+                            <select id="status_${o.id_orden}" style="padding:5px; border-radius:5px; background:#1e293b; color:var(--text-main); border:1px solid var(--accent); margin-right:10px;">
+                                <option value="Procesando Pago" ${o.status_orden==='Procesando Pago'?'selected':''}>Procesando Pago</option>
+                                <option value="Recibiendo Pedido" ${o.status_orden==='Recibiendo Pedido'?'selected':''}>Recibiendo Pedido</option>
+                                <option value="Empacado en Almacén" ${o.status_orden==='Empacado en Almacén'?'selected':''}>Empacado en Almacén</option>
+                                <option value="Pedido en Aduanas" ${o.status_orden==='Pedido en Aduanas'?'selected':''}>Pedido en Aduanas</option>
+                                <option value="Pedido en Camino" ${o.status_orden==='Pedido en Camino'?'selected':''}>Pedido en Camino</option>
+                                <option value="Pedido Entregado" ${o.status_orden==='Pedido Entregado'?'selected':''}>Pedido Entregado</option>
+                                <option value="Cancelado" ${o.status_orden==='Cancelado'?'selected':''}>Cancelado</option>
+                            </select>
+                            <button class="btn-success" style="font-size:12px; padding:6px 12px;" onclick="actualizarStatusOrden(${o.id_orden})">Actualizar</button>
+                        </td>
+                    </tr>`;
+                });
+                document.getElementById("tablaLogistica").innerHTML = html;
+            } catch(e) { console.error(e); }
+        }
+
+        async function actualizarStatusOrden(id) {
+            const nuevoStatus = document.getElementById("status_" + id).value;
+            try {
+                const res = await fetch(`${API_URL}/admin/orden_status/${id}`, {
+                    method: 'PUT',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ status: nuevoStatus })
+                });
+                if(res.ok) {
+                    alert("Estado de tracking actualizado. El cliente ya puede verlo.");
+                } else {
+                    alert("Error al actualizar la orden.");
+                }
+            } catch(e) { console.error(e); }
+        }
+
+        /* ----- FUNCIONES PARA PRODUCTOS ------ */
+        let globalProductos = [];
+        let filtroCategoria = 'Todas';
+
+        async function cargarProductos() {
+            try {
+                const res = await fetch(`${API_URL}/productos`);
+                globalProductos = await res.json();
+                renderProductosManager();
+            } catch (err) { console.error(err); }
+        }
+
+        function setFiltroCat(cat) {
+            filtroCategoria = cat;
+            document.querySelectorAll('.pill').forEach(el => el.classList.remove('active'));
+            event.target.classList.add('active');
+            filtrarProductos();
+        }
+
+        function filtrarProductos() {
+            renderProductosManager();
+        }
+
+        function filtrarProductosGlobal() {
+            mostrarSeccion('productos'); // Auto jump to products view
+            renderProductosManager();
+        }
+
+        function renderProductosManager() {
+            const isAdmin = localStorage.getItem("userRol") === "admin";
+            let data = globalProductos;
+
+            const searchEl = document.getElementById("buscadorDocs");
+            const globalEl = document.getElementById("globalSearchBox");
+            const q = searchEl && searchEl.value ? searchEl.value.toLowerCase() : (globalEl ? globalEl.value.toLowerCase() : "");
+
+            data = globalProductos.filter(p => {
+                let matchCat = (!isAdmin && filtroCategoria !== 'Todas') ? (p.categoria === filtroCategoria) : true;
+                
+                let safeDesc = p.descripcion ? p.descripcion.toLowerCase() : "";
+                let safeMarca = p.marca ? p.marca.toLowerCase() : "";
+                let matchSearch = safeDesc.includes(q) || safeMarca.includes(q);
+                
+                return matchCat && matchSearch;
+            });
+
+            if (isAdmin) {
+                document.getElementById("tablaModoAdmin").classList.remove("hidden");
+                document.getElementById("gridProductos").classList.add("hidden");
+                let headersHTML = `<tr><th>ID</th><th>Imagen</th><th>Categoria</th><th>Marca</th><th>Descripción</th><th>Costo</th><th>Proveedor</th><th>Precio</th><th>Acciones</th></tr>`;
+                document.getElementById("headProductos").innerHTML = headersHTML;
+                let html = "";
+                data.forEach(p => {
+                    let rawDesc = p.descripcion ? p.descripcion : 'Sin nombre';
+                    let safeDescForClick = rawDesc.replace(/'/g, "\\'");
+
+                    let rowHtml = `<tr>
+                        <td>${p.id}</td>
+                        <td><img src="${p.imagen_url || 'https://via.placeholder.com/50'}" style="width:40px;height:40px;object-fit:cover;border-radius:4px;"></td>
+                        <td>${p.categoria || 'General'}</td>
+                        <td>${p.marca || '-'}</td>
+                        <td>${rawDesc}</td>
+                        <td>$${parseFloat(p.costo || 0).toFixed(2)}</td>
+                        <td>${p.proveedor || '-'}</td>
+                        <td>$${parseFloat(p.precioVenta || 0).toFixed(2)}</td>
+                        <td>
+                            <button class="btn-success" style="background:#0284c7;" onclick="editarProducto(${p.id}, '${safeDescForClick}', ${p.precioVenta}, ${p.costo || 0}, '${p.marca || ''}', '${p.proveedor || ''}', '${p.imagen_url || ''}', '${p.categoria || ''}')">✏️ Editar</button>
+                            <button class="btn-danger" onclick="eliminarProducto(${p.id})">Borrar</button>
+                        </td>
+                    </tr>`;
+                    html += rowHtml;
+                });
+                document.getElementById("tablaProductos").innerHTML = html;
+            } else {
+                document.getElementById("tablaModoAdmin").classList.add("hidden");
+                document.getElementById("gridProductos").classList.remove("hidden");
+                let gridHtml = '';
+                if (data.length === 0) gridHtml = '<p style="grid-column: 1/-1; text-align:center; color:#94a3b8;">No hay resultados para tu búsqueda...</p>';
+
+                data.forEach(p => {
+                    let priceFloat = parseFloat(p.precioVenta || 0);
+                    let rawDesc = p.descripcion ? p.descripcion : 'Sin nombre';
+                    let safeDesc = String(rawDesc).replace(/'/g, "\\'");
+                    let safeMarca = p.marca ? String(p.marca).replace(/'/g, "\\'") : 'Genérico';
+                    let safeImg = p.imagen_url || 'https://via.placeholder.com/200';
+                    
+                    let isC2C = p.vendedor_nombre ? true : false;
+                    let safeCondicion = p.condicion_uso ? String(p.condicion_uso).replace(/'/g, "\\'") : '';
+                    let safeDetalles = p.detalles_producto ? String(p.detalles_producto).replace(/'/g, "\\'") : '';
+                    let safeVendedor = isC2C ? (p.vendedor_nombre + ' ' + (p.vendedor_apellido || '')).replace(/'/g, "\\'") : '';
+
+                    let condTag = isC2C ? `<div style="position:absolute; top:10px; right:10px; background:#ea580c; color:white; font-size:10px; padding:2px 6px; border-radius:10px; font-weight:bold;">${safeCondicion}</div>` : '';
+
+                    gridHtml += `
+                    <div class="product-card" style="cursor:pointer; position:relative;" onclick="abrirModalProd(${p.id}, '${safeDesc}', '${safeMarca}', ${priceFloat}, '${safeImg}', '${safeCondicion}', '${safeDetalles}', '${safeVendedor}')">
+                        ${condTag}
+                        <img src="${safeImg}" alt="${safeDesc}">
+                        <div class="marca">${safeMarca}</div>
+                        <h3>${rawDesc}</h3>
+                        <div class="precio">$${priceFloat.toFixed(2)}</div>
+                    </div>`;
+                });
+                document.getElementById("gridProductos").innerHTML = gridHtml;
+            }
+        }
+
+        function toggleModal(id, show) {
+            const el = document.getElementById(id);
+            if (show) el.classList.add("active");
+            else el.classList.remove("active");
+        }
+
+        function abrirModalProd(id, desc, marca, precio, img, condicion, detalles, vendedor) {
+            document.getElementById("mProdImg").src = img;
+            document.getElementById("mProdMarca").innerText = marca;
+            document.getElementById("mProdDesc").innerText = desc;
+            document.getElementById("mProdPrecio").innerText = `$${precio.toFixed(2)}`;
+            document.getElementById("mProdQty").value = 1;
+
+            if (vendedor) {
+                document.getElementById("mProdCondicion").classList.remove("hidden");
+                document.getElementById("mProdCondicion").innerText = condicion;
+                document.getElementById("mProdDetalles").innerText = detalles ? `"${detalles}"` : '';
+                document.getElementById("mProdVendedor").classList.remove("hidden");
+                document.getElementById("mProdVendedor").querySelector('strong').innerText = vendedor;
+            } else {
+                document.getElementById("mProdCondicion").classList.add("hidden");
+                document.getElementById("mProdDetalles").innerText = '';
+                document.getElementById("mProdVendedor").classList.add("hidden");
+            }
+
+            document.getElementById("mProdBtn").onclick = function () {
+                let qty = parseInt(document.getElementById("mProdQty").value) || 1;
+                comprarProductoRapido(id, desc, precio, qty);
+                toggleModal('modalProducto', false);
+            };
+
+            toggleModal('modalProducto', true);
+        }
+        async function subirPublicacion() {
+            const desc = document.getElementById("c2cDesc").value;
+            const precio = document.getElementById("c2cPrecio").value;
+            const condicion = document.getElementById("c2cEstado").value;
+            const detalles = document.getElementById("c2cDetalles").value;
+            const img = document.getElementById("c2cImg").value;
+            const idC = localStorage.getItem("idCliente");
+
+            if(!desc || !precio || !idC) {
+                alert("Por favor llena el título y el precio.");
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API_URL}/mis_productos`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        idCliente: idC,
+                        descripcion: desc,
+                        precioVenta: parseFloat(precio),
+                        imagen_url: img,
+                        condicion_uso: condicion,
+                        detalles_producto: detalles,
+                        categoria: 'Segunda Mano'
+                    })
+                });
+                
+                if (res.ok) {
+                    alert("¡Tu producto fue publicado con éxito en el Catálogo Global!");
+                    document.getElementById("c2cDesc").value = "";
+                    document.getElementById("c2cPrecio").value = "";
+                    document.getElementById("c2cDetalles").value = "";
+                    document.getElementById("c2cImg").value = "";
+                    cargarProductos();
+                    mostrarSeccion('productos');
+                } else {
+                    alert("Error al publicar.");
+                }
+            } catch(e) { console.error(e); }
+        }
+        function editarProducto(id, desc, precio, costo, marca, prov, img, cat) {
+            document.getElementById("prodIdEdit").value = id;
+            document.getElementById("prodDesc").value = desc;
+            document.getElementById("prodPrecio").value = precio;
+            document.getElementById("prodCosto").value = costo || "";
+            document.getElementById("prodMarca").value = marca || "";
+            document.getElementById("prodProv").value = prov || "";
+            document.getElementById("prodImg").value = img || "";
+            document.getElementById("prodCat").value = cat || "General";
+
+            document.getElementById("btnGuardarProd").innerText = "🔄 Actualizar Producto";
+            document.getElementById("btnCancelarEdit").classList.remove("hidden");
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function cancelarEdicion() {
+            document.getElementById("prodIdEdit").value = "";
+            document.getElementById("prodDesc").value = "";
+            document.getElementById("prodPrecio").value = "";
+            document.getElementById("prodCosto").value = "";
+            document.getElementById("prodMarca").value = "";
+            document.getElementById("prodProv").value = "";
+            document.getElementById("prodImg").value = "";
+
+            document.getElementById("btnGuardarProd").innerText = "+ Agregar Producto";
+            document.getElementById("btnCancelarEdit").classList.add("hidden");
+        }
+
+        async function guardarProducto() {
+            const idEdit = document.getElementById("prodIdEdit").value;
+            const descripcion = document.getElementById("prodDesc").value;
+            const precio = document.getElementById("prodPrecio").value;
+            const costo = document.getElementById("prodCosto").value;
+            const nombreMarca = document.getElementById("prodMarca").value;
+            const nombreProv = document.getElementById("prodProv").value;
+            const imagen_url = document.getElementById("prodImg").value;
+            const categoria = document.getElementById("prodCat").value;
+
+            if (!descripcion || !precio) {
+                alert("Descripción y precio son requeridos");
+                return;
+            }
+
+            const methodType = idEdit ? 'PUT' : 'POST';
+            const endpoint = idEdit ? `${API_URL}/productos/${idEdit}` : `${API_URL}/productos`;
+
+            try {
+                const res = await fetch(endpoint, {
+                    method: methodType,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        descripcion,
+                        precioVenta: parseFloat(precio),
+                        costo: costo ? parseFloat(costo) : 0,
+                        nombreMarca: nombreMarca.trim(),
+                        nombreProv: nombreProv.trim(),
+                        imagen_url: imagen_url.trim(),
+                        categoria: categoria
+                    })
+                });
+
+                const dataJSON = await res.json();
+
+                if (!res.ok) {
+                    alert("Error en SQL: " + (dataJSON.error || "Desconocido"));
+                    return;
+                }
+
+                cancelarEdicion();
+                cargarProductos();
+                cargarSelects();
+            } catch (e) {
+                alert("Error crítico conectando: " + e.message);
+            }
+        }
+
+        async function cargarSelects() {
+            try {
+                const [resM, resP] = await Promise.all([
+                    fetch(`${API_URL}/marcas`),
+                    fetch(`${API_URL}/proveedores`)
+                ]);
+                const marcas = await resM.json();
+                const provs = await resP.json();
+
+                let htmlM = '';
+                marcas.forEach(m => htmlM += `<option value="${m.nombre}">`);
+                document.getElementById('listMarcas').innerHTML = htmlM;
+
+                let htmlP = '';
+                provs.forEach(p => htmlP += `<option value="${p.nombre}">`);
+                document.getElementById('listProvs').innerHTML = htmlP;
+            } catch (e) { console.error("Error cargando selects"); }
+        }
+
+        // ============================================
+        // CARRITO LOGIC
+        // ============================================
+        let carrito = [];
+
+        function comprarProductoRapido(id, desc, precio, qty) {
+            let exist = carrito.find(p => p.id === id);
+            if (exist) exist.cantidad += qty;
+            else carrito.push({ id, desc, precioVenta: precio, cantidad: qty });
+
+            document.getElementById("cartCount").innerText = carrito.reduce((a, b) => a + b.cantidad, 0);
+            mostrarSeccion('carrito');
+        }
+
+        function removerDelCarrito(id) {
+            carrito = carrito.filter(p => p.id !== id);
+            document.getElementById("cartCount").innerText = carrito.reduce((a, b) => a + b.cantidad, 0);
+            renderCarrito();
+        }
+
+        function renderCarrito() {
+            let html = "";
+            let total = 0;
+            carrito.forEach(p => {
+                let subtotal = p.cantidad * p.precioVenta;
+                total += subtotal;
+                html += `<tr>
+                    <td>${p.desc}</td>
+                    <td>$${parseFloat(p.precioVenta).toFixed(2)}</td>
+                    <td>${p.cantidad}</td>
+                    <td>$${subtotal.toFixed(2)}</td>
+                    <td><button class="btn-danger" onclick="removerDelCarrito(${p.id})">Quitar</button></td>
+                </tr>`;
+            });
+            document.getElementById("tablaCarritoList").innerHTML = html;
+            document.getElementById("cartTotal").innerText = total.toFixed(2);
+        }
+
+        function iniciarPagoCarrito() {
+            if (carrito.length === 0) return alert("Tu carrito está vacío");
+            
+            document.getElementById("modalPagoTotal").innerText = document.getElementById("cartTotal").innerText;
+            
+            // Auto re-llenar el número de tarjeta si existe, pero NADA más.
+            const savedCard = localStorage.getItem("savedCard");
+            document.getElementById("payTarjeta").value = savedCard || "";
+            document.getElementById("payExp").value = "";
+            document.getElementById("payCvv").value = "";
+            document.getElementById("payName").value = "";
+            
+            toggleModal('modalPago', true);
+        }
+
+        function confirmarPago() {
+            const card = document.getElementById("payTarjeta").value.trim();
+            const exp = document.getElementById("payExp").value.trim();
+            const cvv = document.getElementById("payCvv").value.trim();
+            const name = document.getElementById("payName").value.trim();
+
+            if (!card || !exp || !cvv || !name) {
+                alert("Por favor llena todos los datos bancarios.");
+                return;
+            }
+
+            // Guardar SOLAMENTE la tarjeta
+            localStorage.setItem("savedCard", card);
+
+            // Destruir por seguridad instantánea los campos visuales
+            document.getElementById("payExp").value = "";
+            document.getElementById("payCvv").value = "";
+
+            alert("Procesando pago con Institución Bancaria...");
+            toggleModal('modalPago', false);
+            procesarCheckoutReal();
+        }
+
+        async function procesarCheckoutReal() {
+            const idClienteStr = localStorage.getItem("idCliente");
+            let reqBody = { items: carrito };
+            if (idClienteStr) reqBody.idCliente = parseInt(idClienteStr);
+
+            try {
+                const res = await fetch(`${API_URL}/checkout`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(reqBody)
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    let totalP = document.getElementById("cartTotal").innerText;
+
+                    carrito = [];
+                    document.getElementById("cartCount").innerText = "0";
+                    renderCarrito();
+
+                    // Show Ticket
+                    document.getElementById('tcktId').innerText = data.id_orden;
+                    document.getElementById('tcktTotal').innerText = totalP;
+                    toggleModal('modalTicket', true);
+
+                } else {
+                    const data = await res.json();
+                    alert("Error en compra: " + data.error);
+                }
+            } catch (e) { alert("Error conectando al servidor"); }
+        }
+
+        async function eliminarProducto(id) {
+            if (!confirm("¿Estás seguro de borrar este producto?")) return;
+            try {
+                await fetch(`${API_URL}/productos/${id}`, { method: 'DELETE' });
+                cargarProductos();
+            } catch {
+                alert("Error al borrar el producto");
+            }
+        }
+
+        async function cargarPerfil() {
+            const user = localStorage.getItem("userName");
+            try {
+                const res = await fetch(`${API_URL}/perfil/${user}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    localStorage.setItem("idCliente", data.id);
+                    let perfilHtml = `
+                        <div class="profile-icon">🚗</div>
+                        <h3>${data.nombre} ${data.apellido}</h3>
+                        <p><strong>Teléfono:</strong> ${data.telefono || 'No registrado'}</p>
+                        <p><strong>ID Cliente Nro:</strong> #00${data.id}</p>
+                    `;
+                    document.getElementById("profileCardBox").innerHTML = perfilHtml;
+                    cargarHistorial(data.id);
+                } else {
+                    document.getElementById("profileCardBox").innerHTML = "<p>Tu cuenta no tiene un Perfil de Cliente Asociado (Creado antes de la V3).</p>";
+                    document.getElementById("misOrdenesBox").innerHTML = "<p style='color:#94a3b8;'>Sin historial para mostrar.</p>";
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        async function cargarHistorial(idC) {
+            try {
+                const res = await fetch(`${API_URL}/mis_ordenes/${idC}?t=${new Date().getTime()}`);
+                const data = await res.json();
+
+                let box = document.getElementById("misOrdenesBox");
+                if (!data || data.length === 0) {
+                    box.innerHTML = "<p style='color:#94a3b8;'>Aún no tienes pedidos registrados.</p>";
+                    return;
+                }
+
+                let html = "";
+                data.forEach(o => {
+                    let d = new Date(o.fecha).toLocaleDateString();
+                    
+                    let bgStatus = o.status === 'Cancelado' ? '#ef4444' : 
+                                   o.status === 'Pedido Entregado' ? '#10b981' : '#3b82f6';
+
+                    html += `<div class="history-item" style="position:relative;">
+                        <span style="position:absolute; top:10px; right:10px; background:${bgStatus}; color:white; font-size:10px; padding:3px 8px; border-radius:12px; font-weight:bold;">
+                            ${o.status || 'Procesando Pago'}
+                        </span>
+                        <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+                            <h4>Orden #00${o.id_orden}</h4>
+                        </div>
+                        <span style="color:var(--success); font-weight:bold; font-size:18px;">$${o.total.toFixed(2)}</span>
+                        <p style="margin:5px 0 10px 0; font-size:12px; color:#94a3b8;">Fecha: ${d}</p>
+                        <ul>`;
+                    o.items.forEach(i => {
+                        html += `<li>${i.qty}x ${i.desc} - $${i.price.toFixed(2)}</li>`;
+                    });
+                    html += `</ul></div>`;
+                });
+                box.innerHTML = html;
+            } catch (e) { console.error(e); }
+        }
+
+    </script>
+</body>
+
+</html>
